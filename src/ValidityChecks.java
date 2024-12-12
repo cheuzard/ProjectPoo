@@ -25,30 +25,21 @@ public class ValidityChecks {
         //checks for input validity
         StringBuilder br = new StringBuilder();
         for (int i = 0; i < pre.length(); i++) {
-            if (!(isDigit(pre.charAt(i)) || isOperation(pre.charAt(i)))) {
-                for (int j = 0; j < 3; j++) {
-                    br.append(pre.charAt(i));
-                    i++;
-                }
+            if (!(isDigit(pre.charAt(i)) || isValid(pre.charAt(i)))) {
                 switch (br.toString()){
-                    case "sin", "exp", "cos", "log": i--; break;
+                    case "s", "e", "c", "l","q":
+                        break;
                     default:
-                        br.append(pre.charAt(i));
-                        if (br.toString().equals("sqrt")){
-                            br.delete(0, br.length());
-                            break;
-                        }else {
-                            return false;
-                        }
+                        return false;
                 }
             }
         }
         return true;
     }
-    boolean isOperation(char c) {
+    private boolean isValid(char c) {
         //checks if the char is a math operation/parenthesis
         return switch (c) {
-            case '+', '-', '*', '/' , '(', ')'-> true;
+            case '+', '-', '*', '/' , '(', ')', 's', 'e', 'c', 'l', 'q','.'-> true;
             default -> false;
         };
     }
