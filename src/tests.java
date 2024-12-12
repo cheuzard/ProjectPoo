@@ -44,6 +44,4 @@ public class tests {
         double factor = Math.pow(10, decimalPlaces);
         return Math.floor(value * factor) / factor;
     }
-//    boolean test()
-//5 1.414213562 2
 }
