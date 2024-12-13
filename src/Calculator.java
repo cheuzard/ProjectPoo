@@ -158,8 +158,9 @@ public class Calculator {
 
     static double calc(String expression) {
         Parser parser = new Parser(expression);
-        System.out.println(parser.convertToPostfix());
+//        System.out.println(parser.convertToPostfix());
         String post = parser.convertToPostfix();
+        assert post != null;
         double a = 0, b = 0;
         Stack<Double> stack = new Stack<>();
         for (int i = 0; i < post.length(); i++) {
@@ -181,8 +182,6 @@ public class Calculator {
                 stack.push(calculate(stack.pop(), post.charAt(i)));
             }
         }
-        return stack.pop();
+        return Math.round(stack.pop()*Math.pow(10,15)/Math.pow(10,15));
     }
-
-
 }
