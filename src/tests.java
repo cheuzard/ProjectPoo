@@ -14,6 +14,18 @@ public class tests {
          "(5 * exp(0.5)) / (log(8) + sin(45))",               // Complex fraction with exponential
          "log(sqrt(100)) * cos(0) + sin(sqrt(16)) * 2"        // Mixed logarithmic and trigonometric
  };
+ public static String[] Etests = {
+         "log",
+         "log()",
+         "()",
+         "s",
+         "lo",
+         "lov",
+
+         "sin2log",
+         "2exp",
+         "sgdsg",
+ };
 
  public static double[] expected = {
          5.70710,
@@ -31,13 +43,13 @@ public class tests {
     public static void main(String[] args) {
 
         for (int i = 0;i<expressions.length;i++){
-//            if (truncateToDecimal(Calculator.calc(expressions[i]),5) == expected[i]){
-//                System.out.println("valid");
-//            }else{
+            if (truncateToDecimal(Calculator.calc(expressions[i]),5) == expected[i]){
+                System.out.println("valid");
+            }else{
                 System.out.println("your expression: " + expressions[i]);
                 System.out.println("result: "+ truncateToDecimal(Calculator.calc(expressions[i]),5));
-//            }
-//            System.out.println("---------------------------------------------");
+            }
+            System.out.println("---------------------------------------------");
         }
     }
     public static double truncateToDecimal(double value, int decimalPlaces) {
