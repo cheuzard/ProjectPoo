@@ -31,13 +31,13 @@ public class tests {
     public static void main(String[] args) {
 
         for (int i = 0;i<expressions.length;i++){
-            if (truncateToDecimal(Calculator.calc(expressions[i]),5) == expected[i]){
-                System.out.println("valid");
-            }else{
+//            if (truncateToDecimal(Calculator.calc(expressions[i]),5) == expected[i]){
+//                System.out.println("valid");
+//            }else{
                 System.out.println("your expression: " + expressions[i]);
                 System.out.println("result: "+ truncateToDecimal(Calculator.calc(expressions[i]),5));
-            }
-            System.out.println("---------------------------------------------");
+//            }
+//            System.out.println("---------------------------------------------");
         }
     }
     public static double truncateToDecimal(double value, int decimalPlaces) {

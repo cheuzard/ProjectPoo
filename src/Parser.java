@@ -32,17 +32,17 @@ public class Parser {
             }
             // If current character is an opening parenthesis, push to stack
             else if (current == '(') {
-//                operatorStack.push(current);
+                operatorStack.push(current);
             }
             // If current character is a closing parenthesis
             else if (current == ')') {
-//                while (!operatorStack.isEmpty() && operatorStack.peek() != '(') {
-//                    postfix.append(operatorStack.pop());
-//                }
-//                // Remove the opening parenthesis
-//                if (!operatorStack.isEmpty() && operatorStack.peek() == '(') {
-//                    operatorStack.pop();
-//                }
+                while (!operatorStack.isEmpty() && operatorStack.peek() != '(') {
+                    postfix.append(operatorStack.pop());
+                }
+                // Remove the opening parenthesis
+                if (!operatorStack.isEmpty() && operatorStack.peek() == '(') {
+                    operatorStack.pop();
+                }
             }
             // If current character is an operator
             else if (isOperator(current) || isSpecial(current)) {
