@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 // Interface de base pour les calculs
 interface CalculMath {
@@ -158,7 +160,6 @@ public class Calculator {
 
     static double calc(String expression) {
         Parser parser = new Parser(expression);
-//        System.out.println(parser.convertToPostfix());
         String post = parser.convertToPostfix();
         assert post != null;
         double a = 0, b = 0;
@@ -182,6 +183,6 @@ public class Calculator {
                 stack.push(calculate(stack.pop(), post.charAt(i)));
             }
         }
-        return Math.round(stack.pop()*Math.pow(10,15)/Math.pow(10,15));
+        return BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue();
     }
 }
