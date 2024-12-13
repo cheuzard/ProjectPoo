@@ -133,7 +133,8 @@ class Sqrt extends OperationUnaire {
 }
 
 // Classe principale de test
-public class Calculator {
+public class Calculatrice {
+    //Binary calculation
     static double calculate(double a, double b,char op) {
         CalculMath operation = switch (op) {
             case '+' -> new Addition(a, b);
@@ -145,6 +146,7 @@ public class Calculator {
         assert operation != null;
         return operation.Calculer();
     }
+    //Unitary calculation
     static double calculate(double a,char op) {
         CalculMath operation = switch (op) {
             case 's' -> new Sin(a);
@@ -158,49 +160,47 @@ public class Calculator {
         return operation.Calculer();
     }
 
-    static double calc(String expression) {
-        Parser parser = new Parser(expression);
-        String post = parser.convertToPostfix();
-        if (post == null || post.isEmpty()) {
-            System.out.println("ERROR");
-            return 987654321.9999999;
-        }
-        double a = 0, b = 0;
-        Stack<Double> stack = new Stack<>();
-        for (int i = 0; i < post.length(); i++) {
-            if (post.charAt(i) == '(') {
-                StringBuilder br = new StringBuilder();
-                while (post.charAt(i + 1) != ')') {
-                    i++;
-                    br.append(post.charAt(i));
-                }
-                try{
-                stack.push(Double.parseDouble(br.toString()));
-                }catch (NumberFormatException e){
-                    System.out.println("ERROR");
-                    return 987654321.9999999;
-                }
+    static double calc(String expression) throws Exception {
+        Exception invalid = new Exception("expression is invalid");
+        try {
+            Parser parser = new Parser(expression);
+            String post = parser.convertToPostfix();
 
-            }
-            else if (Parser.isOperator(post.charAt(i)) && stack.size() >= 2) {
-                try {
-                    b = stack.pop();
-                    a = stack.pop();
-                } catch(Exception e) {
-                    System.out.println("ERROR");
-                    return 987654321.9999999;
+            double a = 0, b = 0;
+            Stack<Double> stack = new Stack<>();
+            //go through the string characters
+            for (int i = 0; i < post.length(); i++) {
+//                numbers were put in parentheses by the pre formater function
+//                when an opening parentheses is found add the number in it to the stack
+                if (post.charAt(i) == '(') {
+                    StringBuilder br = new StringBuilder();
+                    //go through the chars to build the number in string
+                    while (post.charAt(i + 1) != ')') {
+                        i++;
+                        br.append(post.charAt(i));
+                    }
+
+//                  try parsing the string to double and finally add it to stack
+                    stack.push(Double.parseDouble(br.toString()));
                 }
-                stack.push(calculate(a ,b, post.charAt(i)));
-            }
-            else if (Parser.isSpecial(post.charAt(i))) {
-                try {
+                else if (Parser.isOperator(post.charAt(i))) {
+                    //when a Binary operation like  '+', '-', '*', '/'
+                    // is found pop 2 numbers from the stack
+                        b = stack.pop();
+                        a = stack.pop();
+
+                    //perform the calculation then push it back to the stack
+                    stack.push(calculate(a ,b, post.charAt(i)));
+                }
+                else if (Parser.isSpecial(post.charAt(i))) {
+                    //when a unitary operation like 's' sin, 'e' exp, 'c' cos, 'l' log, 'q' sqrt
+                    //pop a number perform calculation then push result to stack
                     stack.push(calculate(stack.pop(), post.charAt(i)));
-                } catch(Exception e) {
-                    System.out.println("ERROR");
-                    return 987654321.9999999;
                 }
             }
+            return BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue();
+        }catch (Exception e) {
+            throw invalid;
         }
-        return !stack.isEmpty() ? BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue():987654321.9999999;
     }
 }

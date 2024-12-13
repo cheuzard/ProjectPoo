@@ -1,8 +1,7 @@
-import java.lang.reflect.Array;
-
 public class tests {
  public static String[]  expressions = {
 //         "(5 * exp(0.5)) / (log(8) + sin(45))",
+         "4*(2+3)",
          "sqrt(25) + log(100) * sin(45) / 2",
          "exp(log(3)) * cos(60) + sqrt(16) - 4",
          "(5 * sin(30)) / (log(10) + sqrt(9))",
@@ -75,6 +74,7 @@ public class tests {
  };
 
  public static double[] expected = {
+         20,
          5.70710,
          0.80571,
          0.625,
@@ -98,11 +98,15 @@ public class tests {
         System.out.println("normal result tests:");
         for (int i = 0;i<expressions.length;i++){
             System.out.println("your expression: " + expressions[i]);
-            result = truncateToDecimal(Calculator.calc(expressions[i]),5);
-            if (result == expected[i]){
-                System.out.println("                                        valid");
-                nvalid++;
-            }else{
+            try{
+            result = truncateToDecimal(Calculatrice.calc(expressions[i]),5);
+                if (result == expected[i]){
+                    System.out.println("                                       valid");
+                    nvalid++;
+                }else{
+                    nerrors++;
+                }
+            }catch(Exception e){
                 nerrors++;
             }
             System.out.println("result: "+ result);
@@ -112,13 +116,16 @@ public class tests {
         System.out.println("error result tests:");
         for (String etest : Etests) {
             System.out.println("your expression: " + etest);
-            if (Calculator.calc(etest) == 987654321.9999999) {
-                System.out.println("                                        valid");
-                evalid++;
-            } else {
-                System.out.println("result: " + truncateToDecimal(Calculator.calc(etest), 5));
+            try{
+                result = truncateToDecimal(Calculatrice.calc(etest),5);
+                System.out.println("result: " + truncateToDecimal(result, 5));
                 eerrors++;
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("                                       valid");
+                evalid++;
             }
+
             System.out.println("---------------------------------------------");
         }
         System.out.println("finished normal tests with "+ nvalid+" passes, and "+ nerrors+" errors");

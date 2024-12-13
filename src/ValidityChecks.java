@@ -3,17 +3,11 @@ import javax.print.attribute.HashPrintServiceAttributeSet;
 import static java.lang.Character.isDigit;
 
 public class ValidityChecks {
-    private String pre;
-    ValidityChecks(String pre){
-        this.pre = pre;
+
+    static boolean Valid(String pre) {
+        return validParenthesis(pre) && validInputs(pre);
     }
-    boolean Valid() {
-        if (pre == null || pre.isEmpty()) {
-            return false;
-        }
-        return validParenthesis() && validInputs();
-    }
-    private boolean validParenthesis() {
+    private static boolean validParenthesis(String pre) {
         //counts parenthesis to check their validity
         int n = 0;
         for (int i = 0; i < pre.length(); i++) {
@@ -26,7 +20,7 @@ public class ValidityChecks {
         return n == 0;
     }
 //some very basic input validation to root out very obviously wrong expressions
-    private boolean validInputs() {
+    private static boolean validInputs(String pre) {
         //checks for input validity
         for (int i = 0; i < pre.length(); i++) {
             if (!isDigit(pre.charAt(i))) {
@@ -62,11 +56,4 @@ public class ValidityChecks {
         }
         return true;
     }
-//    private boolean isValid(char c) {
-//        //checks if the char is a math operation/parenthesis
-//        return switch (c) {
-//            case '+', '-', '*', '/' , '(', ')', 's', 'e', 'c', 'l', 'q','.'-> true;
-//            default -> false;
-//        };
-//    }
 }
