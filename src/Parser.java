@@ -164,5 +164,4 @@ public class Parser {
             default -> 0;
         };
     }
-
 }
