@@ -14,105 +14,117 @@ public class Parser {
         if (!checks.Valid()){
             return null;
         }
-        StringBuilder postfix = new StringBuilder();
-        Stack<Character> operatorStack = new Stack<>();
+        try {
+            StringBuilder postfix = new StringBuilder();
+            Stack<Character> operatorStack = new Stack<>();
 
-        for (int i = 0; i < infixExpression.length(); i++) {
-            char current = infixExpression.charAt(i);
+            for (int i = 0; i < infixExpression.length(); i++) {
+                char current = infixExpression.charAt(i);
 
-            // If current character is a digit, add to output
-            if (Character.isDigit(current) || current == '.') {
-                // Handle multi-digit numbers
-                StringBuilder number = new StringBuilder(String.valueOf(current));
-                while (i + 1 < infixExpression.length() &&
-                        (Character.isDigit(infixExpression.charAt(i + 1)) || infixExpression.charAt(i + 1) == '.')) {
-                    number.append(infixExpression.charAt(++i));
+                // If current character is a digit, add to output
+                if (Character.isDigit(current) || current == '.') {
+                    // Handle multi-digit numbers
+                    StringBuilder number = new StringBuilder(String.valueOf(current));
+                    while (i + 1 < infixExpression.length() &&
+                            (Character.isDigit(infixExpression.charAt(i + 1)) || infixExpression.charAt(i + 1) == '.')) {
+                        number.append(infixExpression.charAt(++i));
+                    }
+                    postfix.append("(").append(number).append(")");
                 }
-                postfix.append("(").append(number).append(")");
-            }
-            // If current character is an opening parenthesis, push to stack
-            else if (current == '(') {
-//                operatorStack.push(current);
-            }
-            // If current character is a closing parenthesis
-            else if (current == ')') {
-//                while (!operatorStack.isEmpty() && operatorStack.peek() != '(') {
-//                    postfix.append(operatorStack.pop());
-//                }
-//                // Remove the opening parenthesis
-//                if (!operatorStack.isEmpty() && operatorStack.peek() == '(') {
-//                    operatorStack.pop();
-//                }
-            }
-            // If current character is an operator
-            else if (isOperator(current) || isSpecial(current)) {
-                while (!operatorStack.isEmpty() &&
-                        getPrecedence(operatorStack.peek()) >= getPrecedence(current)) {
+                // If current character is an opening parenthesis, push to stack
+                else if (current == '(') {
+                operatorStack.push(current);
+                }
+                // If current character is a closing parenthesis
+                else if (current == ')') {
+                while (!operatorStack.isEmpty() && operatorStack.peek() != '(') {
                     postfix.append(operatorStack.pop());
                 }
-                operatorStack.push(current);
+                // Remove the opening parenthesis
+                if (!operatorStack.isEmpty() && operatorStack.peek() == '(') {
+                    operatorStack.pop();
+                }
+                }
+                // If current character is an operator
+                else if (isOperator(current) || isSpecial(current)) {
+                    while (!operatorStack.isEmpty() &&
+                            getPrecedence(operatorStack.peek()) >= getPrecedence(current)) {
+                        postfix.append(operatorStack.pop());
+                    }
+                    operatorStack.push(current);
+                }
             }
-        }
 
-        // Pop remaining operators from the stack
-        while (!operatorStack.isEmpty()) {
-            postfix.append(operatorStack.pop());
-        }
+            // Pop remaining operators from the stack
+            while (!operatorStack.isEmpty()) {
+                postfix.append(operatorStack.pop());
+            }
 
-        return postfix.toString();
+            return postfix.toString();
+        }catch (Exception e){
+            return null;
+        }
     }
     private String prepFormat(String infixExpression){
         //standardize the mathematical expressions,
         //no space and all lowercase
-        StringBuilder br = new StringBuilder();
-        for (int i = 0; i < infixExpression.length(); i++) {
-            if (isUpperCase(infixExpression.charAt(i))) {
-                br.append(toLowerCase(infixExpression.charAt(i)));
-            }else if (!isSpaceChar(infixExpression.charAt(i))) {
-                br.append(infixExpression.charAt(i));
-            }
-        }
-        infixExpression = br.toString();
-        br = new StringBuilder();
-        for (int i = 0; i < infixExpression.length(); i++) {
-            if (!(isDigit(infixExpression.charAt(i)) || isOperator(infixExpression.charAt(i))
-                    || infixExpression.charAt(i) == '(' || infixExpression.charAt(i) == ')')) {
-                StringBuilder tmp = new StringBuilder();
-                for (int j = 0; j < 3; j++) {
-                    tmp.append(infixExpression.charAt(i));
-                    i++;
+        try {
+            StringBuilder br = new StringBuilder();
+            for (int i = 0; i < infixExpression.length(); i++) {
+                if (isUpperCase(infixExpression.charAt(i))) {
+                    br.append(toLowerCase(infixExpression.charAt(i)));
+                } else if (!isSpaceChar(infixExpression.charAt(i))) {
+                    br.append(infixExpression.charAt(i));
                 }
-                switch (tmp.toString()){
-                    case "sin":
-                        br.append('s');
-                        i--;
-                        break;
-                    case "exp":
-                        br.append('e');
-                        i--;
-                        break;
-                    case "cos":
-                        br.append('c');
-                        i--;
-                        break;
-                    case "log":
-                        br.append('l');
-                        i--;
-                        break;
-                    default:
+            }
+            infixExpression = br.toString();
+            br = new StringBuilder();
+            System.out.println("after lowecasing and removing space"+infixExpression);
+            for (int i = 0; i < infixExpression.length(); i++) {
+                if (!(isDigit(infixExpression.charAt(i)) || isOperator(infixExpression.charAt(i))
+                        || infixExpression.charAt(i) == '(' || infixExpression.charAt(i) == ')'
+                            || infixExpression.charAt(i) == '.')) {
+                    StringBuilder tmp = new StringBuilder();
+                    if (infixExpression.charAt(i) == '(' || infixExpression.charAt(i) == ')'){br.append(infixExpression.charAt(i)); continue;}
+                    for (int j = 0; j < 3; j++) {
                         tmp.append(infixExpression.charAt(i));
-                        if (tmp.toString().equals("sqrt")){
-                            br.append('q');
-                        break;
-                        }else {
-                            br.append(tmp);
-                        }
+                        i++;
+                    }
+                    switch (tmp.toString()) {
+                        case "sin":
+                            br.append('s');
+                            i--;
+                            break;
+                        case "exp":
+                            br.append('e');
+                            i--;
+                            break;
+                        case "cos":
+                            br.append('c');
+                            i--;
+                            break;
+                        case "log":
+                            br.append('l');
+                            i--;
+                            break;
+                        default:
+                            tmp.append(infixExpression.charAt(i));
+                            if (tmp.toString().equals("sqrt")) {
+                                br.append('q');
+                                break;
+                            }
+                            else {
+                                return null;
+                            }
+                    }
+                } else {
+                    br.append(infixExpression.charAt(i));
                 }
-            }else{
-                br.append(infixExpression.charAt(i));
             }
+            return br.toString();
+        }catch (Exception e){
+            return null;
         }
-        return br.toString();
     }
      static boolean isSpecial(char ch) {
         return switch (ch){

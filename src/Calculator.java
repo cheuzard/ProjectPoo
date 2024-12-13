@@ -161,7 +161,11 @@ public class Calculator {
     static double calc(String expression) {
         Parser parser = new Parser(expression);
         String post = parser.convertToPostfix();
-        assert post != null;
+        System.out.println(post);
+        if (post == null || post.isEmpty()) {
+            System.out.println("ERROR");
+            return 0;
+        }
         double a = 0, b = 0;
         Stack<Double> stack = new Stack<>();
         for (int i = 0; i < post.length(); i++) {
@@ -174,15 +178,25 @@ public class Calculator {
                 stack.push(Double.parseDouble(br.toString()));
 
             }
-            else if (Parser.isOperator(post.charAt(i))) {
-                b = stack.pop();
-                a = stack.pop();
+            else if (Parser.isOperator(post.charAt(i)) && stack.size() >= 2) {
+                try {
+                    b = stack.pop();
+                    a = stack.pop();
+                } catch(Exception e) {
+                    System.out.println("ERROR");
+                    return 0;
+                }
                 stack.push(calculate(a ,b, post.charAt(i)));
             }
             else if (Parser.isSpecial(post.charAt(i))) {
-                stack.push(calculate(stack.pop(), post.charAt(i)));
+                try {
+                    stack.push(calculate(stack.pop(), post.charAt(i)));
+                } catch(Exception e) {
+                    System.out.println("ERROR");
+                    return 0;
+                }
             }
         }
-        return BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue();
+        return !stack.isEmpty() ? BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue():0;
     }
 }
