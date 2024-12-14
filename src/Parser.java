@@ -1,22 +1,18 @@
 import java.util.Stack;
 import static java.lang.Character.*;
 public class Parser {
-    Exception invalid = new Exception("expression is invalid");
 
     String infixExpression;
     ValidityChecks checks;
     Parser(String infixExpression) throws Exception {
-//        try{
-        //if expression is empty or null stop
-        if (infixExpression == null || infixExpression.isEmpty()){
-            throw invalid;
+        infixExpression = infixExpression.toLowerCase().replaceAll(" ", "");
+
+        //the formated expression goes through validation to root out obviously wrong expressions
+        if (!ValidityChecks.Valid(infixExpression)){
+            throw new invalid();
         }
         //received expression will first be preFormated to ease conversion to postFix
         this.infixExpression = prepFormat(infixExpression);
-        //the formated expression goes through validation to root out obviously wrong expressions
-         if (!ValidityChecks.Valid(this.infixExpression)){
-             throw invalid;
-         }
     }
 
     // method to convert infix to postfix
@@ -24,25 +20,12 @@ public class Parser {
         //standardize the mathematical expressions,
         //no space and all lowercase
             StringBuilder br = new StringBuilder();
-            for (int i = 0; i < infixExpression.length(); i++) {
-                if (isUpperCase(infixExpression.charAt(i))) {
-                    br.append(toLowerCase(infixExpression.charAt(i)));
-                } else if (!isSpaceChar(infixExpression.charAt(i))) {
-                    br.append(infixExpression.charAt(i));
-                }
-            }
-            infixExpression = br.toString();
-
-            //the string that will receive the final prepared expression
-            br = new StringBuilder();
 
             for (int i = 0; i < infixExpression.length(); i++) {
-                //needsModification checks if the char is not
-                //a digit, an operator, parentheses or a dot
-                //if it's none of those it means it has to be a special operation
-                //like cos,sin etc., which will be modified to make calculation easier
+                //isSpecial checks if the char is cos,sin etc.,
+                //which will be modified to make calculation easier
                 //cos becomes c,sin becomes s etc., sqrt will become q to avoid confusion with sin
-                if (needsModification(infixExpression.charAt(i))) {
+                if (isSpecial(infixExpression.charAt(i))) {
                     //initialize a temporary stringBuilder
                     StringBuilder tmp = new StringBuilder();
 
@@ -69,16 +52,9 @@ public class Parser {
                             i--;
                             break;
                         default:
-                            //if none of the 3 character operations add one and check for sqrt
-                            tmp.append(infixExpression.charAt(i));
-                            if (tmp.toString().equals("sqrt")) {
-                                br.append('q');
-                                break;
-                            }
-                            else {
-                                //if it's not sqrt stop and return null
-                                throw invalid;
-                            }
+                            //if none of the 4 character operations it's sqrt
+                            br.append('q');
+                            break;
                     }
                 } else {
                     //what doesn't need change foes straight to final prepared string
@@ -150,9 +126,6 @@ public class Parser {
             case '+', '-', '*', '/' -> true;
             default -> false;
         };
-    }
-    private boolean needsModification(char ch) {
-        return !(isDigit(ch) || isOperator(ch) || ch == '(' || ch == ')' || ch == '.');
     }
 
     // Method to get operator precedence

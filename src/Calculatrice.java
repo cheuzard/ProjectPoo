@@ -2,136 +2,6 @@ import java.util.Stack;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-// Interface de base pour les calculs
-interface CalculMath {
-    double Calculer();
-}
-
-// Classe abstraite pour les opérations binaires
-abstract class OperationBinaire implements CalculMath {
-    protected double valeur1;
-    protected double valeur2;
-
-    public OperationBinaire(double valeur1, double valeur2) {
-        this.valeur1 = valeur1;
-        this.valeur2 = valeur2;
-    }
-}
-
-// Classe abstraite pour les opérations unaires
-abstract class OperationUnaire implements CalculMath {
-    protected double valeur;
-
-    public OperationUnaire(double valeur) {
-        this.valeur = valeur;
-    }
-}
-
-// Implémentations des opérations binaires
-class Addition extends OperationBinaire {
-    public Addition(double valeur1, double valeur2) {
-        super(valeur1, valeur2);
-    }
-
-    @Override
-    public double Calculer() {
-        return valeur1 + valeur2;
-    }
-}
-
-class Soustraction extends OperationBinaire {
-    public Soustraction(double valeur1, double valeur2) {
-        super(valeur1, valeur2);
-    }
-
-    @Override
-    public double Calculer() {
-        return valeur1 - valeur2;
-    }
-}
-
-class Multiplication extends OperationBinaire {
-    public Multiplication(double valeur1, double valeur2) {
-        super(valeur1, valeur2);
-    }
-
-    @Override
-    public double Calculer() {
-        return valeur1 * valeur2;
-    }
-}
-
-class Division extends OperationBinaire {
-    public Division(double valeur1, double valeur2) {
-        super(valeur1, valeur2);
-    }
-
-    @Override
-    public double Calculer() {
-        if (valeur2 == 0) {
-            throw new ArithmeticException("Division par zéro impossible");
-        }
-        return valeur1 / valeur2;
-    }
-}
-
-// Implémentations des opérations unaires
-class Sin extends OperationUnaire {
-    public Sin(double valeur) {
-        super(valeur);
-    }
-
-    @Override
-    public double Calculer() {
-        return Math.sin(valeur*(Math.PI/180));
-    }
-}
-
-class Cos extends OperationUnaire {
-    public Cos(double valeur) {
-        super(valeur);
-    }
-
-    @Override
-    public double Calculer() {
-        return Math.cos(valeur*(Math.PI/180));
-    }
-}
-
-class Log extends OperationUnaire {
-    public Log(double valeur) {
-        super(valeur);
-    }
-
-    @Override
-    public double Calculer() {
-        //to get log base 10
-        return Math.log(valeur) / Math.log(10);
-    }
-}
-
-class Exp extends OperationUnaire {
-    public Exp(double valeur) {
-        super(valeur);
-    }
-
-    @Override
-    public double Calculer() {
-        return Math.exp(valeur);
-    }
-}
-
-class Sqrt extends OperationUnaire {
-    public Sqrt(double valeur) {
-        super(valeur);
-    }
-
-    @Override
-    public double Calculer() {
-        return Math.sqrt(valeur);
-    }
-}
-
 // Classe principale de test
 public class Calculatrice {
     //Binary calculation
@@ -144,6 +14,7 @@ public class Calculatrice {
             default -> null;
         };
         assert operation != null;
+
         return operation.Calculer();
     }
     //Unitary calculation
@@ -161,8 +32,7 @@ public class Calculatrice {
     }
 
     static double calc(String expression) throws Exception {
-        Exception invalid = new Exception("expression is invalid");
-        try {
+//        try {
             Parser parser = new Parser(expression);
             String post = parser.convertToPostfix();
 
@@ -190,7 +60,8 @@ public class Calculatrice {
                         a = stack.pop();
 
                     //perform the calculation then push it back to the stack
-                    stack.push(calculate(a ,b, post.charAt(i)));
+
+                    stack.push(calculate(a, b, post.charAt(i)));
                 }
                 else if (Parser.isSpecial(post.charAt(i))) {
                     //when a unitary operation like 's' sin, 'e' exp, 'c' cos, 'l' log, 'q' sqrt
@@ -199,8 +70,8 @@ public class Calculatrice {
                 }
             }
             return BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue();
-        }catch (Exception e) {
-            throw invalid;
-        }
+//        }catch (Exception e) {
+//            throw invalid;
+//        }
     }
 }

@@ -1,6 +1,5 @@
 public class tests {
  public static String[]  expressions = {
-//         "(5 * exp(0.5)) / (log(8) + sin(45))",
          "4*(2+3)",
          "sqrt(25) + log(100) * sin(45) / 2",
          "exp(log(3)) * cos(60) + sqrt(16) - 4",
@@ -71,6 +70,8 @@ public class tests {
          "2sin3",
          "3cos4",
          "4exp5",
+         ".3*3",
+         "20."
  };
 
  public static double[] expected = {
@@ -89,50 +90,78 @@ public class tests {
          2
     };
     // Main method to test the conversion
-    public static void main(String[] args) {
-        int nerrors = 0;
-        int nvalid = 0;
-        int eerrors = 0;
-        int evalid = 0;
-        double result = 0;
-        System.out.println("normal result tests:");
-        for (int i = 0;i<expressions.length;i++){
-            System.out.println("your expression: " + expressions[i]);
-            try{
-            result = truncateToDecimal(Calculatrice.calc(expressions[i]),5);
-                if (result == expected[i]){
-                    System.out.println("                                       valid");
-                    nvalid++;
-                }else{
-                    nerrors++;
-                }
-            }catch(Exception e){
-                nerrors++;
-            }
-            System.out.println("result: "+ result);
-            System.out.println("expect: "+expected[i]);
-            System.out.println("---------------------------------------------");
-        }
-        System.out.println("error result tests:");
-        for (String etest : Etests) {
-            System.out.println("your expression: " + etest);
-            try{
-                result = truncateToDecimal(Calculatrice.calc(etest),5);
-                System.out.println("result: " + truncateToDecimal(result, 5));
-                eerrors++;
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-                System.out.println("                                       valid");
-                evalid++;
-            }
-
-            System.out.println("---------------------------------------------");
-        }
-        System.out.println("finished normal tests with "+ nvalid+" passes, and "+ nerrors+" errors");
-        System.out.println("finished error tests with "+ evalid+" passes, and "+ eerrors+" errors");
-    }
+//    public static void main(String[] args) {
+//        int nerrors = 0;
+//        int nvalid = 0;
+//        int eerrors = 0;
+//        int evalid = 0;
+//        double result = 0;
+//        System.out.println("normal result tests:");
+//        for (int i = 0;i<expressions.length;i++){
+//            System.out.println("your expression: " + expressions[i]);
+//            try{
+//                result = truncateToDecimal(Calculatrice.calc(expressions[i]),5);
+//                if (result == expected[i]){
+//                    System.out.println("                                       valid");
+//                    nvalid++;
+//                }else{
+//                    nerrors++;
+//                }
+//            }catch(Exception e){
+//                nerrors++;
+//            }
+//            System.out.println("result: "+ result);
+//            System.out.println("expect: "+expected[i]);
+//            System.out.println("---------------------------------------------");
+//        }
+//        System.out.println("error result tests:");
+//        for (String etest : Etests) {
+//            System.out.println("your expression: " + etest);
+//            try{
+//                result = truncateToDecimal(Calculatrice.calc(etest),5);
+//                System.out.println("result: " + truncateToDecimal(result, 5));
+//                eerrors++;
+//            }catch (Exception e){
+//                System.out.println(e.getMessage());
+//                System.out.println("                                       valid");
+//                evalid++;
+//            }
+//
+//            System.out.println("---------------------------------------------");
+//        }
+//        System.out.println("finished normal tests with "+ nvalid+" passes, and "+ nerrors+" errors");
+//        System.out.println("finished error tests with "+ evalid+" passes, and "+ eerrors+" errors");
+//    }
     public static double truncateToDecimal(double value, int decimalPlaces) {
         double factor = Math.pow(10, decimalPlaces);
         return Math.floor(value * factor) / factor;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(ValidityChecks.Valid("cos(cos)"));
+        int npassed = 0;int nerrors = 0;
+        for (String expr : expressions) {
+            if(ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""))) {
+                System.out.println("valid");
+                npassed++;
+            }
+            else nerrors++;
+            System.out.println("---------------------------------------------");
+        }
+        System.out.println("finished normal tests with "+ npassed+" passes, and "+ nerrors+" errors");
+        int epassed = 0;int eerrors = 0;
+        for(String expr : Etests) {
+            if(!ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""))) {
+                epassed++;
+                System.out.println("valid");
+            }
+            else {
+                System.out.println("         failed");
+                eerrors++;
+            }
+//            System.out.println("                           "+ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", "")));
+            System.out.println("---------------------------------------------");
+        }
+        System.out.println("finished error tests with "+ epassed+" passes, and "+ eerrors+" errors");
     }
 }

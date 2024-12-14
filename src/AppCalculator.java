@@ -11,10 +11,10 @@ public class AppCalculator {
             System.out.print("Enter you mathematical expression: ");
             try{
             result = Calculatrice.calc(reader.readLine());
+            System.out.println("result: "+result);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
-            BufferedReader expression = new BufferedReader(new InputStreamReader(System.in));
             do {
             System.out.print("do you wish to continue? (Y/N): ");
             keepGoing = reader.readLine().trim().toLowerCase();
