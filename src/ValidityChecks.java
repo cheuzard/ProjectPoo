@@ -86,7 +86,7 @@ public class ValidityChecks {
                         if (!isDigit(pre.charAt(i + 1)) || !isDigit(pre.charAt(i - 1)))return false;
                         break;
                     case ')':
-                        if (i+1 >= pre.length() && isDigit(pre.charAt(i+1)))return false;
+                        if (i+1 < pre.length() && isDigit(pre.charAt(i+1)))return false;
                     case ' ':
                         break;
                     default:
