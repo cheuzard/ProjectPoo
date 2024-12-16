@@ -1,5 +1,6 @@
 
 import static java.lang.Character.isDigit;
+
 public class ValidityChecks {
 
     static boolean Valid(String pre) {
@@ -44,7 +45,7 @@ public class ValidityChecks {
                             case "log":
                                 break;
                             default:
-                                if(isInRange(pre, i)) return false;
+                                if(i+1 >= pre.length()) return false;
                                 i++;
                                 br.append(pre.charAt(i));
                                 if (br.toString().equals("sqrt")) break;
@@ -52,7 +53,7 @@ public class ValidityChecks {
                         }
                         //if the next char is out of bounds return false
                         //because these operations have their operand right after them
-                        if (isInRange(pre, i)) return false;
+                        if (i+1 >= pre.length()) return false;
                         //check that the next char is either a digit or an opening parentheses
                         if (!isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(') {
                             return false;
@@ -85,7 +86,7 @@ public class ValidityChecks {
                         if (!isDigit(pre.charAt(i + 1)) || !isDigit(pre.charAt(i - 1)))return false;
                         break;
                     case ')':
-                        if (isInRange(pre, i))
+                        if (i+1 >= pre.length() && isDigit(pre.charAt(i+1)))return false;
                     case ' ':
                         break;
                     default:
@@ -94,9 +95,5 @@ public class ValidityChecks {
             }
         }
         return true;
-    }
-
-    private static boolean isInRange(String pre, int i) {
-        return i + 1 >= pre.length();
     }
 }
