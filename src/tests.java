@@ -1,5 +1,5 @@
 public class tests {
- public static String[]  expressions = {
+    public static String[]  expressions = {
          "4*(2+3)",
          "sqrt(25) + log(100) * sin(45) / 2",
          "exp(log(3)) * cos(60) + sqrt(16) - 4",
@@ -15,7 +15,7 @@ public class tests {
          "2",
          "2log10",
          "5sin90"
- };
+    };
     public static double[] expected = {
             20,
             5.70710,
@@ -59,12 +59,9 @@ public class tests {
          "exp(,4)",
          "cos(3,)",
          "1,,23",
-//         "2.3.4",
-//         "1.2.3",
          "log(1,2,3)",
          "sin(4,5,6)",
          "exp(7,8,9)",
-//         "cos(1.2.3)",
          "*,",
          "/.",
          "+*",
@@ -86,8 +83,13 @@ public class tests {
          "cos(cos)",
          "exp(exp)",
          ".3*3",
-         "20."
- };
+         "20.",
+         "log(100)3",
+         "sin(100) 4",
+         "(1.4.2)*2",
+        ".2",
+        ".5*2"
+    };
 
     // Main method to test the conversion
 //    public static void main(String[] args) {
