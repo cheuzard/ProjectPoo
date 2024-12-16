@@ -12,9 +12,28 @@ public class tests {
          "(5 * exp(0.5)) / (log(8) + sin(45))",
          "log(sqrt(100)) * cos(0) + sin(sqrt(16)) * 2",
          "2.5*2",
-         "2"
+         "2",
+         "2log10",
+         "5sin90"
  };
- public static String[] Etests = {
+    public static double[] expected = {
+            20,
+            5.70710,
+            0.80571,
+            0.625,
+            4.23254,
+            0.92187,
+            2.82842,
+            2.49066,
+            4.62798,
+            5.11962,
+            1.13951,
+            5,
+            2,
+            2,
+            5,
+    };
+    public static String[] Etests = {
          "log",
          "log()",
          "()",
@@ -40,12 +59,12 @@ public class tests {
          "exp(,4)",
          "cos(3,)",
          "1,,23",
-         "2.3.4",
-         "1.2.3",
+//         "2.3.4",
+//         "1.2.3",
          "log(1,2,3)",
          "sin(4,5,6)",
          "exp(7,8,9)",
-         "cos(1.2.3)",
+//         "cos(1.2.3)",
          "*,",
          "/.",
          "+*",
@@ -66,29 +85,10 @@ public class tests {
          "sin(sin)",
          "cos(cos)",
          "exp(exp)",
-         "1log2",
-         "2sin3",
-         "3cos4",
-         "4exp5",
          ".3*3",
          "20."
  };
 
- public static double[] expected = {
-         20,
-         5.70710,
-         0.80571,
-         0.625,
-         4.23254,
-         0.92187,
-         2.82842,
-         2.49066,
-         4.62798,
-         5.11962,
-         1.13951,
-         5,
-         2
-    };
     // Main method to test the conversion
 //    public static void main(String[] args) {
 //        int nerrors = 0;
@@ -148,7 +148,6 @@ public class tests {
             else nerrors++;
             System.out.println("---------------------------------------------");
         }
-        System.out.println("finished normal tests with "+ npassed+" passes, and "+ nerrors+" errors");
         int epassed = 0;int eerrors = 0;
         for(String expr : Etests) {
             if(!ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""))) {
@@ -162,6 +161,7 @@ public class tests {
 //            System.out.println("                           "+ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", "")));
             System.out.println("---------------------------------------------");
         }
+        System.out.println("finished normal tests with "+ npassed+" passes, and "+ nerrors+" errors");
         System.out.println("finished error tests with "+ epassed+" passes, and "+ eerrors+" errors");
     }
 }

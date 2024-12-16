@@ -20,12 +20,14 @@ public class Parser {
         //standardize the mathematical expressions,
         //no space and all lowercase
             StringBuilder br = new StringBuilder();
-
             for (int i = 0; i < infixExpression.length(); i++) {
                 //isSpecial checks if the char is cos,sin etc.,
                 //which will be modified to make calculation easier
                 //cos becomes c,sin becomes s etc., sqrt will become q to avoid confusion with sin
                 if (isSpecial(infixExpression.charAt(i))) {
+                    if(i-1 >= 0 && isDigit(infixExpression.charAt(i-1))){
+                        br.append('*');
+                    }
                     //initialize a temporary stringBuilder
                     StringBuilder tmp = new StringBuilder();
 
@@ -56,7 +58,10 @@ public class Parser {
                             br.append('q');
                             break;
                     }
-                } else {
+                }else if(i-1 >= 0 && (infixExpression.charAt(i) == '(') && isDigit(infixExpression.charAt(i - 1))){
+                    br.append('*');
+                }
+                else {
                     //what doesn't need change foes straight to final prepared string
                     br.append(infixExpression.charAt(i));
                 }
