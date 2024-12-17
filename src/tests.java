@@ -14,7 +14,10 @@ public class tests {
          "2.5*2",
          "2",
          "2log10",
-         "5sin90"
+         "5sin90",
+         ".3*3",
+         ".2",
+         ".5*2"
     };
     public static double[] expected = {
             20,
@@ -32,6 +35,9 @@ public class tests {
             2,
             2,
             5,
+            0.6,
+            0.2,
+            1
     };
     public static String[] Etests = {
          "log",
@@ -82,13 +88,10 @@ public class tests {
          "sin(sin)",
          "cos(cos)",
          "exp(exp)",
-         ".3*3",
          "20.",
          "log(100)3",
          "sin(100) 4",
          "(1.4.2)*2",
-        ".2",
-        ".5*2"
     };
 
     // Main method to test the conversion

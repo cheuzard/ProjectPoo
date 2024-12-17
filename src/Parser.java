@@ -58,8 +58,14 @@ public class Parser {
                             br.append('q');
                             break;
                     }
-                }else if(i-1 >= 0 && (infixExpression.charAt(i) == '(') && isDigit(infixExpression.charAt(i - 1))){
+                }
+                else if(i-1 >= 0 && (infixExpression.charAt(i) == '(') && isDigit(infixExpression.charAt(i - 1))){
                     br.append('*');
+                }
+                else if ((infixExpression.charAt(i) == '.')) {
+                    if (i-1 >= 0 && !isDigit(infixExpression.charAt(i-1))){
+                        br.append('0');
+                    }
                 }
                 else {
                     //what doesn't need change foes straight to final prepared string
