@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 // Classe principale de test
 public class Calculatrice {
     //Binary calculation
-    private static double calculate(double a, double b,char op) {
+    private static double calculate(double a, double b,char op)  throws ArithmeticException {
         CalculMath operation = switch (op) {
             case '+' -> new Addition(a, b);
             case '-' -> new Soustraction(a, b);
@@ -18,7 +18,7 @@ public class Calculatrice {
         return operation.Calculer();
     }
     //Unitary calculation
-    private static double calculate(double a,char op) {
+    private static double calculate(double a,char op)  throws ArithmeticException {
         CalculMath operation = switch (op) {
             case 's' -> new Sin(a);
             case 'c' -> new Cos(a);

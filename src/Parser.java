@@ -24,19 +24,14 @@ public class Parser {
                 //isSpecial checks if the char is cos,sin etc.,
                 //which will be modified to make calculation easier
                 //cos becomes c,sin becomes s etc., sqrt will become q to avoid confusion with sin
-                if (isSpecial(infixExpression.charAt(i))) {
+                char currentChar = infixExpression.charAt(i);
+                if (isSpecial(currentChar)) {
                     if(i-1 >= 0 && isDigit(infixExpression.charAt(i-1))){
                         br.append('*');
                     }
-                    //initialize a temporary stringBuilder
-                    StringBuilder tmp = new StringBuilder();
 
                     // read the 3 char then switch to find out the operation
-                    for (int j = 0; j < 3; j++) {
-                        tmp.append(infixExpression.charAt(i));
-                        i++;
-                    }
-                    switch (tmp.toString()) {
+                    switch (String.valueOf(infixExpression.charAt(i++)) + infixExpression.charAt(i++) + infixExpression.charAt(i++)) {
                         case "sin":
                             br.append('s');
                             i--;
@@ -59,10 +54,10 @@ public class Parser {
                             break;
                     }
                 }
-                else if(i-1 >= 0 && (infixExpression.charAt(i) == '(') && isDigit(infixExpression.charAt(i - 1))){
+                else if(i-1 >= 0 && (currentChar == '(') && isDigit(infixExpression.charAt(i - 1))){
                     br.append('*');
                 }
-                else if ((infixExpression.charAt(i) == '.')) {
+                else if ((currentChar == '.')) {
                     if (i-1 >= 0){
                         if (!isDigit(infixExpression.charAt(i-1))){
                             br.append("0.");
@@ -72,13 +67,38 @@ public class Parser {
                     }else{
                         br.append("0.");
                     }
+                }
+                else if (currentChar == '-') {
+                    if(infixExpression.charAt(i+1) == '-'){
+                        i++;
+                        br.append('+');
+                    }
+                    else if(i-1 <0){
+                        i = appendNegativeNum(infixExpression, br, i);
+                    }else{
+                        if (!isDigit(infixExpression.charAt(i-1)) && infixExpression.charAt(i-1) != ')'){
+                            i = appendNegativeNum(infixExpression, br, i);
+                        }else{
+                            br.append("-");
+                        }
+                    }
                 } else {
                     //what doesn't need change goes straight to final prepared string
-                    br.append(infixExpression.charAt(i));
+                    br.append(currentChar);
                 }
             }
-        System.out.println("preped: "+br);
             return br.toString();
+    }
+
+    private int appendNegativeNum(String infixExpression, StringBuilder br, int i) {
+        br.append("(0-");
+//        while(i+1 < infixExpression.length() && ( infixExpression.charAt(i+1) == '.' || isDigit(infixExpression.charAt(i+1)) ) ){
+        while(i+1 < infixExpression.length() && !isOperator(infixExpression.charAt(i+1))){
+            i++;
+            br.append(infixExpression.charAt(i));
+        }
+        br.append(")");
+        return i;
     }
 
     private String convertToPostfix() {
@@ -129,7 +149,6 @@ public class Parser {
             while (!operatorStack.isEmpty()) {
                 postfix.append(operatorStack.pop());
             }
-        System.out.println("postfix: "+postfix);
             return postfix.toString();
     }
      protected static boolean isSpecial(char ch) {

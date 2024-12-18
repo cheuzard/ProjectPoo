@@ -15,7 +15,7 @@ public class AppCalculator {
             result = Calculatrice.calc(reader.readLine());
             System.out.println("result: "+result);
             }catch (Exception e){
-                System.out.println(e.getMessage());
+                System.out.println("ERROR: "+e.getMessage());
             }
 //            do {
 //            System.out.print("do you wish to continue? (Y/N): ");

@@ -92,10 +92,10 @@ public class tests {
          "log(100)3",
          "sin(100) 4",
          "(1.4.2)*2",
+            "log100-",
+            "4-",
+            "---",
     };
-
-
-
 
     public static double truncateToDecimal(double value, int decimalPlaces) {
         double factor = Math.pow(10, decimalPlaces);
