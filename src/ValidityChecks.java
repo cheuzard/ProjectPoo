@@ -21,11 +21,9 @@ public class ValidityChecks {
             throw new IllegalArgumentException("Invalid parenthesis");
         }
     }
-//some very basic input validation to root out very obviously wrong expressions
+    //some very basic input validation to root out very obviously wrong expressions
     private static void validInputs(String pre) {
-//        System.out.println(pre);
         if (pre == null || pre.isEmpty()){
-//            return false;
             throw new IllegalArgumentException("no inputs");
         }
         int FirstChar;
@@ -70,7 +68,7 @@ public class ValidityChecks {
                                 if (br.toString().equals("sqrt")) break;
                                 else throw new invalid();
                         }
-                        //if the next char is out of bounds return false
+                        //if the next char is out of bounds throw an exception
                         //because these operations have their operand right after them
                         //check that the next char is either a digit or an opening parentheses
                         if (i + 1 >= pre.length() || !isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '('){
@@ -89,7 +87,7 @@ public class ValidityChecks {
                         }
                         break;
                     case '(':
-//no need to check if i+1>= pre.length since the validParenthesis does it
+                        //no need to check if i+1>= pre.length since the validParenthesis does it
                         if (pre.charAt(i+1) == ')') throw new IllegalArgumentException("Invalid parenthesis");
                         break;
                     case'.':
