@@ -126,22 +126,24 @@ public class tests {
         }
         int npassed = 0;int nerrors = 0;
         for (String expr : expressions) {
-            if(ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""))) {
+            try {
+                ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""));
                 System.out.println("valid");
                 npassed++;
+            }catch(Exception e){
+                nerrors++;
+                System.out.println("---------------------------------------------");
             }
-            else nerrors++;
-            System.out.println("---------------------------------------------");
         }
         int epassed = 0;int eerrors = 0;
         for(String expr : Etests) {
-            if(!ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""))) {
+            try{
+                ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""));
+                eerrors++;
+                System.out.println("         failed");
+            } catch(Exception e) {
                 epassed++;
                 System.out.println("valid");
-            }
-            else {
-                System.out.println("         failed");
-                eerrors++;
             }
 //            System.out.println("                           "+ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", "")));
             System.out.println("---------------------------------------------");

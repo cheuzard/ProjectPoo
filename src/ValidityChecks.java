@@ -3,10 +3,11 @@ import static java.lang.Character.isDigit;
 
 public class ValidityChecks {
 
-    static boolean Valid(String pre) {
-        return validParenthesis(pre) && validInputs(pre);
+    static void Valid(String pre) {
+        validParenthesis(pre);
+        validInputs(pre);
     }
-    private static boolean validParenthesis(String pre) {
+    private static void validParenthesis(String pre) {
         //counts parenthesis to check their validity
         int n = 0;
         for (int i = 0; i < pre.length() && n>=0; i++) {
@@ -16,13 +17,16 @@ public class ValidityChecks {
                 n--;
             }
         }
-        return n == 0;
+        if (n!=0) {
+            throw new IllegalArgumentException("Invalid parenthesis");
+        }
     }
 //some very basic input validation to root out very obviously wrong expressions
-    private static boolean validInputs(String pre) {
+    private static void validInputs(String pre) {
 //        System.out.println(pre);
         if (pre == null || pre.isEmpty()){
-            return false;
+//            return false;
+            throw new IllegalArgumentException("no inputs");
         }
         int FirstChar;
         //checks for input validity
@@ -34,16 +38,17 @@ public class ValidityChecks {
                 while(i+1 < pre.length() && ( pre.charAt(i+1) == '.' || isDigit(pre.charAt(i+1)) ) ){
                     i++;
                     if(pre.charAt(i) == '.'){
-                        if (i+1 >= pre.length()) return false;
-                        if (!isDigit(pre.charAt(i + 1)) || !isDigit(pre.charAt(i - 1)))return false;
+                        if (i + 1 >= pre.length() || !isDigit(pre.charAt(i + 1)) || !isDigit(pre.charAt(i - 1))){
+                            throw new IllegalArgumentException("invalid floating point number");
+                        }
                         dots++;
-                        if (dots > 1) return false;
+                        if (dots > 1) throw new IllegalArgumentException("invalid floating point number");;
                     }
                 }
             } else {
                 switch (pre.charAt(i)){
                     case 's','e', 'c', 'l':
-                        if (i+3 > pre.length()) return false;
+                        if (i+3 > pre.length()) throw new invalid();
                         StringBuilder br =  new StringBuilder();
 
                         //for later checks we need to keep track of the location of the first character
@@ -58,49 +63,46 @@ public class ValidityChecks {
                             case "log":
                                 break;
                             default:
-                                if(i+1 >= pre.length()) return false;
+                                if(i+1 >= pre.length()) throw new IllegalArgumentException("invalid special operation");;
                                 //add one char to the string then check again for sqrt
                                 i++;
                                 br.append(pre.charAt(i));
                                 if (br.toString().equals("sqrt")) break;
-                                else return false;
+                                else throw new invalid();
                         }
                         //if the next char is out of bounds return false
                         //because these operations have their operand right after them
-                        if (i+1 >= pre.length()) return false;
                         //check that the next char is either a digit or an opening parentheses
-                        if (!isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(') {
-                            return false;
+                        if (i + 1 >= pre.length() || !isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '('){
+                            throw new invalid();
                         }
                         break;
                     case '+', '-', '*', '/':
                         //check if the previous and next char are in bounds
                         //because expressions like +, / need two operand one before and after them
-                        if (i+1 >= pre.length() || i-1 < 0) return false;
+                        if (i+1 >= pre.length() || i-1 < 0) throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");
                         //before can be either a digit or closing parentheses.
                         //next can be digit, opening parentheses, or a special operation (sin,cos...)
                         if ((!isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(' && !Parser.isSpecial(pre.charAt(i + 1)))
                                 || (!isDigit(pre.charAt(i - 1)) && pre.charAt(i - 1) != ')')) {
-                            return false;
+                            throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");
                         }
                         break;
                     case '(':
 //no need to check if i+1>= pre.length since the validParenthesis does it
-                        if (pre.charAt(i+1) == ')') return false;
+                        if (pre.charAt(i+1) == ')') throw new IllegalArgumentException("Invalid parenthesis");
                         break;
                     case'.':
-                        if (i+1 >= pre.length()) return false;
-                        if (!isDigit(pre.charAt(i + 1)))return false;
+                        if (i + 1 >= pre.length() || !isDigit(pre.charAt(i + 1))) throw new IllegalArgumentException("Invalid parenthesis");
                         break;
                     case ')':
-                        if (i+1 < pre.length() && isDigit(pre.charAt(i+1)))return false;
+                        if (i+1 < pre.length() && isDigit(pre.charAt(i+1))) throw new IllegalArgumentException("Invalid parenthesis");
                     case ' ':
                         break;
                     default:
-                        return false;
+                        throw new invalid();
                 }
             }
         }
-        return true;
     }
 }

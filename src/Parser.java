@@ -8,9 +8,7 @@ public class Parser {
         infixExpression = infixExpression.toLowerCase().replaceAll(" ", "");
 
         //the formated expression goes through validation to root out obviously wrong expressions
-        if (!ValidityChecks.Valid(infixExpression)){
-            throw new invalid();
-        }
+        ValidityChecks.Valid(infixExpression);
         //received expression will first be preFormated to ease conversion to postFix
         this.infixExpression = prepFormat(infixExpression);
         this.postFixExpression = convertToPostfix();
