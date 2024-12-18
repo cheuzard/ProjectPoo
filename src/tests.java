@@ -35,7 +35,7 @@ public class tests {
             2,
             2,
             5,
-            0.6,
+            0.9,
             0.2,
             1
     };
@@ -94,56 +94,36 @@ public class tests {
          "(1.4.2)*2",
     };
 
-    // Main method to test the conversion
-//    public static void main(String[] args) {
-//        int nerrors = 0;
-//        int nvalid = 0;
-//        int eerrors = 0;
-//        int evalid = 0;
-//        double result = 0;
-//        System.out.println("normal result tests:");
-//        for (int i = 0;i<expressions.length;i++){
-//            System.out.println("your expression: " + expressions[i]);
-//            try{
-//                result = truncateToDecimal(Calculatrice.calc(expressions[i]),5);
-//                if (result == expected[i]){
-//                    System.out.println("                                       valid");
-//                    nvalid++;
-//                }else{
-//                    nerrors++;
-//                }
-//            }catch(Exception e){
-//                nerrors++;
-//            }
-//            System.out.println("result: "+ result);
-//            System.out.println("expect: "+expected[i]);
-//            System.out.println("---------------------------------------------");
-//        }
-//        System.out.println("error result tests:");
-//        for (String etest : Etests) {
-//            System.out.println("your expression: " + etest);
-//            try{
-//                result = truncateToDecimal(Calculatrice.calc(etest),5);
-//                System.out.println("result: " + truncateToDecimal(result, 5));
-//                eerrors++;
-//            }catch (Exception e){
-//                System.out.println(e.getMessage());
-//                System.out.println("                                       valid");
-//                evalid++;
-//            }
-//
-//            System.out.println("---------------------------------------------");
-//        }
-//        System.out.println("finished normal tests with "+ nvalid+" passes, and "+ nerrors+" errors");
-//        System.out.println("finished error tests with "+ evalid+" passes, and "+ eerrors+" errors");
-//    }
+
+
+
     public static double truncateToDecimal(double value, int decimalPlaces) {
         double factor = Math.pow(10, decimalPlaces);
         return Math.floor(value * factor) / factor;
     }
 
     public static void main(String[] args) {
-        System.out.println(ValidityChecks.Valid("cos(cos)"));
+        int errors = 0;
+        int valid = 0;
+        double result = 0;
+        System.out.println("normal result tests:");
+        for (int i = 0;i<expressions.length;i++){
+            System.out.println("your expression: " + expressions[i]);
+            try{
+                result = truncateToDecimal(Calculatrice.calc(expressions[i]),5);
+                if (result == expected[i]){
+                    System.out.println("                                       valid");
+                    valid++;
+                }else{
+                    errors++;
+                }
+            }catch(Exception e){
+                errors++;
+            }
+            System.out.println("result: "+ result);
+            System.out.println("expect: "+expected[i]);
+            System.out.println("---------------------------------------------");
+        }
         int npassed = 0;int nerrors = 0;
         for (String expr : expressions) {
             if(ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", ""))) {
@@ -166,7 +146,11 @@ public class tests {
 //            System.out.println("                           "+ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", "")));
             System.out.println("---------------------------------------------");
         }
+        System.out.println("validations:");
         System.out.println("finished normal tests with "+ npassed+" passes, and "+ nerrors+" errors");
         System.out.println("finished error tests with "+ epassed+" passes, and "+ eerrors+" errors");
+        System.out.println("calculations:");
+        System.out.println("finished tests with "+ valid+" passes, and "+ errors+" errors");
+
     }
 }

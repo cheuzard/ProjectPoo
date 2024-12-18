@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 // Classe principale de test
 public class Calculatrice {
     //Binary calculation
-    static double calculate(double a, double b,char op) {
+    private static double calculate(double a, double b,char op) {
         CalculMath operation = switch (op) {
             case '+' -> new Addition(a, b);
             case '-' -> new Soustraction(a, b);
@@ -18,7 +18,7 @@ public class Calculatrice {
         return operation.Calculer();
     }
     //Unitary calculation
-    static double calculate(double a,char op) {
+    private static double calculate(double a,char op) {
         CalculMath operation = switch (op) {
             case 's' -> new Sin(a);
             case 'c' -> new Cos(a);
@@ -32,11 +32,11 @@ public class Calculatrice {
     }
 
     static double calc(String expression) throws Exception {
-//        try {
-            Parser parser = new Parser(expression);
-            String post = parser.convertToPostfix();
 
-            double a = 0, b = 0;
+            Parser parser = new Parser(expression);
+            String post = parser.getPostFixExpression();
+
+            double a, b;
             Stack<Double> stack = new Stack<>();
             //go through the string characters
             for (int i = 0; i < post.length(); i++) {
@@ -70,8 +70,5 @@ public class Calculatrice {
                 }
             }
             return BigDecimal.valueOf(stack.pop()).setScale(14, RoundingMode.HALF_UP).doubleValue();
-//        }catch (Exception e) {
-//            throw invalid;
-//        }
     }
 }

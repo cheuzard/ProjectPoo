@@ -3,7 +3,7 @@ import static java.lang.Character.*;
 public class Parser {
 
     String infixExpression;
-    ValidityChecks checks;
+    String postFixExpression;
     Parser(String infixExpression) throws Exception {
         infixExpression = infixExpression.toLowerCase().replaceAll(" ", "");
 
@@ -13,7 +13,9 @@ public class Parser {
         }
         //received expression will first be preFormated to ease conversion to postFix
         this.infixExpression = prepFormat(infixExpression);
+        this.postFixExpression = convertToPostfix();
     }
+
 
     // method to convert infix to postfix
     private String prepFormat(String infixExpression) throws Exception {
@@ -63,19 +65,25 @@ public class Parser {
                     br.append('*');
                 }
                 else if ((infixExpression.charAt(i) == '.')) {
-                    if (i-1 >= 0 && !isDigit(infixExpression.charAt(i-1))){
-                        br.append('0');
+                    if (i-1 >= 0){
+                        if (!isDigit(infixExpression.charAt(i-1))){
+                            br.append("0.");
+                        }else{
+                            br.append('.');
+                        }
+                    }else{
+                        br.append("0.");
                     }
-                }
-                else {
-                    //what doesn't need change foes straight to final prepared string
+                } else {
+                    //what doesn't need change goes straight to final prepared string
                     br.append(infixExpression.charAt(i));
                 }
             }
+        System.out.println("preped: "+br);
             return br.toString();
     }
 
-    public String convertToPostfix() {
+    private String convertToPostfix() {
         //convert the prepared expression to postFix to calculate
         //12+2 will become (12)(2)+
         // l(2*4) will become (2)(4)*l, l is log, as was changed in the prepFormat function
@@ -123,16 +131,16 @@ public class Parser {
             while (!operatorStack.isEmpty()) {
                 postfix.append(operatorStack.pop());
             }
-
+        System.out.println("postfix: "+postfix);
             return postfix.toString();
     }
-     static boolean isSpecial(char ch) {
+     protected static boolean isSpecial(char ch) {
         return switch (ch){
             case 's', 'e', 'c', 'l', 'q' -> true;
             default -> false;
         };
     }
-     static boolean isOperator(char ch) {
+     protected static boolean isOperator(char ch) {
         return switch (ch){
             case '+', '-', '*', '/' -> true;
             default -> false;
@@ -147,5 +155,9 @@ public class Parser {
             case '+', '-' -> 1;
             default -> 0;
         };
+    }
+
+    public String getPostFixExpression() {
+        return postFixExpression;
     }
 }

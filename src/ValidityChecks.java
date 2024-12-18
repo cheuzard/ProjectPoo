@@ -20,24 +20,37 @@ public class ValidityChecks {
     }
 //some very basic input validation to root out very obviously wrong expressions
     private static boolean validInputs(String pre) {
-        System.out.println(pre);
+//        System.out.println(pre);
         if (pre == null || pre.isEmpty()){
             return false;
         }
         int FirstChar;
         //checks for input validity
         for (int i = 0; i < pre.length(); i++) {
-            if (!isDigit(pre.charAt(i))) {
+            if (isDigit(pre.charAt(i))) {
+                //this checks the validity of floating point numbers, to check for invalid expressions
+                //such as 1.2.3 if there are multiple points
+                int dots = 0;
+                while(i+1 < pre.length() && ( pre.charAt(i+1) == '.' || isDigit(pre.charAt(i+1)) ) ){
+                    i++;
+                    if(pre.charAt(i) == '.'){
+                        if (i+1 >= pre.length()) return false;
+                        if (!isDigit(pre.charAt(i + 1)) || !isDigit(pre.charAt(i - 1)))return false;
+                        dots++;
+                        if (dots > 1) return false;
+                    }
+                }
+            } else {
                 switch (pre.charAt(i)){
                     case 's','e', 'c', 'l':
                         if (i+3 > pre.length()) return false;
                         StringBuilder br =  new StringBuilder();
+
+                        //for later checks we need to keep track of the location of the first character
                         FirstChar = i;
-                        for (int j = 0; j < 3; j++) {
-                            br.append(pre.charAt(i));
-                            i++;
-                        }
-                        i--;
+                        //add the first three characters to a string
+                        //three because sin, cos… share the same length 3
+                        br.append(pre.charAt(i++)).append(pre.charAt(i++)).append(pre.charAt(i));
                         switch (br.toString()){
                             case "sin":
                             case "cos":
@@ -46,6 +59,7 @@ public class ValidityChecks {
                                 break;
                             default:
                                 if(i+1 >= pre.length()) return false;
+                                //add one char to the string then check again for sqrt
                                 i++;
                                 br.append(pre.charAt(i));
                                 if (br.toString().equals("sqrt")) break;
@@ -84,17 +98,6 @@ public class ValidityChecks {
                         break;
                     default:
                         return false;
-                }
-            }else{
-                int dots = 0;
-                while(i+1 < pre.length() && ( pre.charAt(i+1) == '.' || isDigit(pre.charAt(i+1)) ) ){
-                    i++;
-                    if(pre.charAt(i) == '.'){
-                        if (i+1 >= pre.length()) return false;
-                        if (!isDigit(pre.charAt(i + 1)) || !isDigit(pre.charAt(i - 1)))return false;
-                        dots++;
-                        if (dots > 1) return false;
-                    }
                 }
             }
         }

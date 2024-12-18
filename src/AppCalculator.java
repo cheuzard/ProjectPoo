@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AppCalculator {
+    //TODO
+    //add negative number support
     public static void main(String[] args) throws IOException {
         String keepGoing;
         double result;
