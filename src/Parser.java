@@ -159,7 +159,7 @@ public class Parser {
     }
      protected static boolean isOperator(char ch) {
         return switch (ch){
-            case '+', '-', '*', '/' -> true;
+            case '+', '-', '*', '/','^' -> true;
             default -> false;
         };
     }
@@ -167,7 +167,8 @@ public class Parser {
     // Method to get operator precedence
     private static int getPrecedence(char operator) {
         return switch (operator) {
-            case 's', 'e', 'c', 'l', 'q' -> 3;
+            case 's', 'e', 'c', 'l', 'q' -> 4;
+            case '^' -> 3;
             case '*', '/' -> 2;
             case '+', '-' -> 1;
             default -> 0;

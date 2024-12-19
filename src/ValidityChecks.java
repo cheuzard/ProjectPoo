@@ -83,7 +83,7 @@ public class ValidityChecks {
                             throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");
                         }
                         break;
-                    case '+', '*', '/':
+                    case '+', '*', '/','^':
                         //check if the previous and next char are in bounds
                         //because expressions like +, / need two operand one before and after them
                         if (i+1 >= pre.length() || i-1 < 0) throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");

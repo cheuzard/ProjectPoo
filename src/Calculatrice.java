@@ -11,6 +11,7 @@ public class Calculatrice {
             case '-' -> new Soustraction(a, b);
             case '*' -> new Multiplication(a, b);
             case '/' -> new Division(a, b);
+            case '^' -> new Power(a, b);
             default -> null;
         };
         assert operation != null;
