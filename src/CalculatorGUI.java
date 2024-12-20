@@ -145,7 +145,7 @@ public class CalculatorGUI extends JFrame {
         resultField.setPreferredSize(new Dimension(190, 30));
         resultField.setBackground(Color.WHITE);
         resultField.setHorizontalAlignment(JTextField.LEFT);
-        resultField.setFont(new Font("Arial", Font.PLAIN, 20));
+        resultField.setFont(new Font("Arial", Font.PLAIN, 15));
         resultField.addFocusListener(redirect);
 
         JButton modeButton = new JButton("Normal Mode");
@@ -230,7 +230,7 @@ public class CalculatorGUI extends JFrame {
         button.setFocusable(false);
         button.setBorderPainted(false);
         button.setContentAreaFilled(false);
-        button.setBackground(new Color(230, 230, 230));
+        button.setBackground(new Color(213, 213, 213));
         button.setHorizontalTextPosition(SwingConstants.CENTER);
         button.setVerticalTextPosition(SwingConstants.CENTER);
         return button;
@@ -249,6 +249,7 @@ public class CalculatorGUI extends JFrame {
         inputField.setCaretPosition(inputField.getText().length());
         try {
             resultField.setText( Double.toString(calc.Calculatrice.calc(inputField.getText())));
+            resultField.setCaretPosition(0);
             isResult.set(true);
         } catch (Exception e) {
             inputField.setText(e.getMessage());
