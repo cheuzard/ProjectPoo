@@ -27,8 +27,18 @@ public class Parser {
                 //which will be modified to make calculation easier
                 //cos becomes c,sin becomes s etc., sqrt will become q to avoid confusion with sin
                 char currentChar = infixExpression.charAt(i);
-                if (isSpecial(currentChar)) {
-                    if(i-1 >= 0 && isDigit(infixExpression.charAt(i-1))){
+                if(currentChar == 'π'){
+                    br.append("("+Math.PI+")");
+                    if(i-1 >= 0 && (isDigit(infixExpression.charAt(i-1)) || infixExpression.charAt(i-1) == ')')){
+                        br.append('*');
+                    }
+                    if (i+1 < infixExpression.length() && isDigit(infixExpression.charAt(i+1))){
+                        br.append('*');
+                    }
+
+                }
+                else if (isSpecial(currentChar)) {
+                    if(i-1 >= 0 && (isDigit(infixExpression.charAt(i-1)) || infixExpression.charAt(i-1) == 'π')){
                         br.append('*');
                     }
 
@@ -64,8 +74,8 @@ public class Parser {
                             break;
                     }
                 }
-                else if(i-1 >= 0 && (currentChar == '(') && isDigit(infixExpression.charAt(i - 1))){
-                    br.append('*');
+                else if(i-1 >= 0 && (currentChar == '(') && (isDigit(infixExpression.charAt(i - 1)) || infixExpression.charAt(i - 1) == 'π' || infixExpression.charAt(i - 1) == ')')){
+                    br.append("*(");
                 }
                 else if ((currentChar == '.')) {
                     if (i-1 >= 0){

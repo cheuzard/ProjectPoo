@@ -95,8 +95,8 @@ public class ValidityChecks {
                         //before can be either a digit or closing parentheses.
                         //next can be digit, opening parentheses, or a special operation (sin,cos...)
                         if ((!isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(' && !Parser.isSpecial(pre.charAt(i + 1))
-                                && pre.charAt(i + 1) != '-')
-                                || (!isDigit(pre.charAt(i - 1)) && pre.charAt(i - 1) != ')')) {
+                                && pre.charAt(i + 1) != '-' && pre.charAt(i + 1) != 'π')
+                                || (!isDigit(pre.charAt(i - 1)) && pre.charAt(i - 1) != ')' && pre.charAt(i-1) != 'π')) {
                             throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");
                         }
                         break;
@@ -109,7 +109,7 @@ public class ValidityChecks {
                         break;
                     case ')':
                         if (i+1 < pre.length() && isDigit(pre.charAt(i+1))) throw new IllegalArgumentException("Invalid parenthesis");
-                    case ' ':
+                    case ' ','π':
                         break;
                     default:
                         throw new IllegalArgumentException("invalid mathematical expression");
