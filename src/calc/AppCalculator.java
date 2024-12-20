@@ -19,10 +19,10 @@ public class AppCalculator {
             }catch (Exception e){
                 System.out.println("ERROR: "+e.getMessage());
             }
-//            do {
-//            System.out.print("do you wish to continue? (Y/N): ");
-//            keepGoing = reader.readLine().trim().toLowerCase();
-//            }while(!(keepGoing.equals("y") || keepGoing.equals("n")));
+            do {
+            System.out.print("do you wish to continue? (Y/N): ");
+            keepGoing = reader.readLine().trim().toLowerCase();
+            }while(!(keepGoing.equals("y") || keepGoing.equals("n")));
         }while(keepGoing.equals("y"));
     }
 }
