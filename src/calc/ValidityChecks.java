@@ -1,3 +1,4 @@
+package calc;
 
 import static java.lang.Character.isDigit;
 
@@ -45,7 +46,7 @@ public class ValidityChecks {
                 }
             } else {
                 switch (pre.charAt(i)){
-                    case 's','e', 'c', 'l':
+                    case 's','e', 'c', 'l','t':
                         if (i+3 > pre.length()) throw new IllegalArgumentException("invalid mathematical expression");
 
                         StringBuilder br =  new StringBuilder();
@@ -60,6 +61,7 @@ public class ValidityChecks {
                             case "sin":
                             case "cos":
                             case "exp":
+                            case "tan":
                                 break;
                             default:
                                 if(i+1 >= pre.length()) throw new IllegalArgumentException("invalid mathematical expression");

@@ -1,3 +1,5 @@
+package calc;
+
 import java.util.Stack;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -26,17 +28,18 @@ public class Calculatrice {
             case 'l' -> new Log(a);
             case 'e' -> new Exp(a);
             case 'q' -> new Sqrt(a);
+            case 't' -> new tan(a);
             default -> null;
         };
         assert operation != null;
         return operation.Calculer();
     }
 
-    static double calc(String expression) throws Exception {
+    public static double calc(String expression) throws Exception {
 
             Parser parser = new Parser(expression);
             String post = parser.getPostFixExpression();
-
+        System.out.println(post);
             double a, b;
             Stack<Double> stack = new Stack<>();
             //go through the string characters

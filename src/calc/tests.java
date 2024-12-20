@@ -1,23 +1,33 @@
+package calc;
+
 public class tests {
     public static String[]  expressions = {
-         "4*(2+3)",
-         "sqrt(25) + log(100) * sin(45) / 2",
-         "exp(log(3)) * cos(60) + sqrt(16) - 4",
-         "(5 * sin(30)) / (log(10) + sqrt(9))",
-         "log(exp(2)) + sqrt(81) * cos(45) - 3",
-         "sin(sqrt(16)) * log(25) + exp(0.5) / 2",
-         "(3 * cos(90)) + sqrt(log(100)) * 2",
-         "exp(sin(45)) - log(16) + sqrt(25) / 3",
-         "sqrt(log(64)) * sin(60) + cos(30) * 4",
-         "(5 * exp(0.5)) / (log(8) + sin(45))",
-         "log(sqrt(100)) * cos(0) + sin(sqrt(16)) * 2",
-         "2.5*2",
-         "2",
-         "2log10",
-         "5sin90",
-         ".3*3",
-         ".2",
-         ".5*2"
+            "4*(2+3)",
+            "sqrt(25) + log(100) * sin(45) / 2",
+            "exp(log(3)) * cos(60) + sqrt(16) - 4",
+            "(5 * sin(30)) / (log(10) + sqrt(9))",
+            "log(exp(2)) + sqrt(81) * cos(45) - 3",
+            "sin(sqrt(16)) * log(25) + exp(0.5) / 2",
+            "(3 * cos(90)) + sqrt(log(100)) * 2",
+            "exp(sin(45)) - log(16) + sqrt(25) / 3",
+            "sqrt(log(64)) * sin(60) + cos(30) * 4",
+            "(5 * exp(0.5)) / (log(8) + sin(45))",
+            "log(sqrt(100)) * cos(0) + sin(sqrt(16)) * 2",
+            "2.5*2",
+            "2",
+            "2log10",
+            "5sin90",
+            ".3*3",
+            ".2",
+            ".5*2",
+            "-2*4",
+            "cos-90",
+            "log-(-100)",
+            "2--2",
+            "2^4",
+            "2^-4",
+            "4^2",
+            "7^(2+log1000)"
     };
     public static double[] expected = {
             20,
@@ -37,7 +47,15 @@ public class tests {
             5,
             0.9,
             0.2,
-            1
+            1,
+            -8,
+            0,
+            2,
+            4,
+            16,
+            0.0625,
+            16,
+            16807,
     };
     public static String[] Etests = {
          "log",
@@ -106,7 +124,7 @@ public class tests {
         int errors = 0;
         int valid = 0;
         double result = 0;
-        System.out.println("normal result tests:");
+        System.out.println("normal result calc.tests:");
         for (int i = 0;i<expressions.length;i++){
             System.out.println("your expression: " + expressions[i]);
             try{
@@ -145,7 +163,7 @@ public class tests {
                 epassed++;
                 System.out.println("valid");
             }
-//            System.out.println("                           "+ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", "")));
+//            System.out.println("                           "+calc.ValidityChecks.Valid(expr.toLowerCase().replaceAll(" ", "")));
             System.out.println("---------------------------------------------");
         }
         System.out.println("validations:");

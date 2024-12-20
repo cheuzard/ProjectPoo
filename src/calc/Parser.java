@@ -1,3 +1,5 @@
+package calc;
+
 import java.util.Stack;
 import static java.lang.Character.*;
 public class Parser {
@@ -46,6 +48,10 @@ public class Parser {
                             break;
                         case "log":
                             br.append('l');
+                            i--;
+                            break;
+                        case "tan":
+                            br.append('t');
                             i--;
                             break;
                         default:
@@ -153,7 +159,7 @@ public class Parser {
     }
      protected static boolean isSpecial(char ch) {
         return switch (ch){
-            case 's', 'e', 'c', 'l', 'q' -> true;
+            case 's', 'e', 'c', 'l', 'q', 't' -> true;
             default -> false;
         };
     }

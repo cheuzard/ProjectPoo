@@ -1,3 +1,5 @@
+package calc;
+
 // Classe abstraite pour les opérations binaires
 abstract class OperationBinaire implements CalculMath {
     protected double valeur1;

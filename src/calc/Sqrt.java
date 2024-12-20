@@ -1,3 +1,5 @@
+package calc;
+
 class Sqrt extends OperationUnaire {
     public Sqrt(double valeur)  throws ArithmeticException {
         super(valeur);

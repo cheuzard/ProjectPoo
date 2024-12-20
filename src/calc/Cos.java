@@ -1,3 +1,5 @@
+package calc;
+
 class Cos extends OperationUnaire {
     public Cos(double valeur) {
         super(valeur);
@@ -5,6 +7,6 @@ class Cos extends OperationUnaire {
 
     @Override
     public double Calculer() {
-        return Math.cos(valeur * (Math.PI / 180));
+        return Math.cos(Math.toRadians(valeur));
     }
 }

@@ -1,3 +1,5 @@
+package calc;
+
 // Implémentations des opérations unaires
 class Sin extends OperationUnaire {
     public Sin(double valeur) {
@@ -6,6 +8,6 @@ class Sin extends OperationUnaire {
 
     @Override
     public double Calculer() {
-        return Math.sin(valeur * (Math.PI / 180));
+        return Math.sin(Math.toRadians(valeur));
     }
 }

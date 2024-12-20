@@ -1,3 +1,5 @@
+package calc;
+
 // Classe abstraite pour les opérations unaires
 abstract class OperationUnaire implements CalculMath {
     protected double valeur;

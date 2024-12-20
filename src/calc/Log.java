@@ -1,3 +1,5 @@
+package calc;
+
 class Log extends OperationUnaire {
     public Log(double valeur) throws ArithmeticException {
         super(valeur);

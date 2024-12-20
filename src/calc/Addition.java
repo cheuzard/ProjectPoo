@@ -1,3 +1,5 @@
+package calc;
+
 // Implémentations des opérations binaires
 class Addition extends OperationBinaire {
     public Addition(double valeur1, double valeur2) {

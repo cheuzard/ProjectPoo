@@ -1,3 +1,5 @@
+package calc;
+
 class Exp extends OperationUnaire {
     public Exp(double valeur) {
         super(valeur);

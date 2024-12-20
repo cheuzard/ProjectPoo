@@ -1,3 +1,5 @@
+package calc;
+
 public class Power extends OperationBinaire{
     public Power(double valeur1, double valeur2) {
         super(valeur1, valeur2);
