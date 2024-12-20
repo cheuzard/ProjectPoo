@@ -44,6 +44,12 @@ public class ValidityChecks {
                     }
                 }
             } else {
+                if(pre.charAt(i) == 'π'){
+                    if(i-1 > 0 && !(isDigit(pre.charAt(i-1)) || Parser.isOperator(pre.charAt(i-1)))){
+                        throw new IllegalArgumentException("invalid mathematical expression");
+                    }
+                    continue;
+                }
                 switch (pre.charAt(i)){
                     case 's','e', 'c', 'l','t':
                         if (i+2 >= pre.length()) throw new IllegalArgumentException("invalid mathematical expression");
@@ -109,7 +115,7 @@ public class ValidityChecks {
                         break;
                     case ')':
                         if (i+1 < pre.length() && isDigit(pre.charAt(i+1))) throw new IllegalArgumentException("Invalid parenthesis");
-                    case ' ','π':
+                    case ' ':
                         break;
                     default:
                         throw new IllegalArgumentException("invalid mathematical expression");

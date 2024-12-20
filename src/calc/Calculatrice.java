@@ -40,7 +40,6 @@ public class Calculatrice {
 
             Parser parser = new Parser(expression);
             String post = parser.getPostFixExpression();
-//        System.out.println(post);
             double a, b;
             Stack<Double> stack = new Stack<>();
             //go through the string characters
