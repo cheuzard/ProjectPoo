@@ -27,7 +27,6 @@ public class ValidityChecks {
         if (pre == null || pre.isEmpty()){
             throw new IllegalArgumentException("no inputs");
         }
-        int FirstChar;
         //checks for input validity
         for (int i = 0; i < pre.length(); i++) {
             if (isDigit(pre.charAt(i))) {
@@ -41,7 +40,7 @@ public class ValidityChecks {
                             throw new IllegalArgumentException("invalid floating point number");
                         }
                         dots++;
-                        if (dots > 1) throw new IllegalArgumentException("invalid floating point number");;
+                        if (dots > 1) throw new IllegalArgumentException("invalid floating point number");
                     }
                 }
             } else {
@@ -52,7 +51,6 @@ public class ValidityChecks {
                         StringBuilder br =  new StringBuilder();
 
                         //for later checks we need to keep track of the location of the first character
-                        FirstChar = i;
                         //add the first three characters to a string
                         //three because sin, cos… share the same length 3
                         br.append(pre.charAt(i++)).append(pre.charAt(i++)).append(pre.charAt(i));

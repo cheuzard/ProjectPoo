@@ -8,7 +8,7 @@ public class AppCalculator {
     //TODO
     //add negative number support
     public static void main(String[] args) throws IOException {
-        String keepGoing = "y";
+        String keepGoing;
         double result;
         do{
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
