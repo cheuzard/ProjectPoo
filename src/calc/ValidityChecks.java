@@ -46,7 +46,8 @@ public class ValidityChecks {
                 }
             } else {
                 switch (pre.charAt(i)){
-                    case 's','e', 'c', 'l','t':
+                    case 's','e', 'c', 'l','t','π':
+                        if(pre.charAt(i) == 'π')break;
                         if (i+3 > pre.length()) throw new IllegalArgumentException("invalid mathematical expression");
 
                         StringBuilder br =  new StringBuilder();
@@ -93,7 +94,7 @@ public class ValidityChecks {
                         //next can be digit, opening parentheses, or a special operation (sin,cos...)
                         if ((!isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(' && !Parser.isSpecial(pre.charAt(i + 1))
                                 && pre.charAt(i + 1) != '-')
-                                || (!isDigit(pre.charAt(i - 1)) && pre.charAt(i - 1) != ')')) {
+                                || (!isDigit(pre.charAt(i - 1)) && pre.charAt(i - 1) != ')' && pre.charAt(i - 1) != 'π')) {
                             throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");
                         }
                         break;

@@ -31,7 +31,13 @@ public class Parser {
                     if(i-1 >= 0 && isDigit(infixExpression.charAt(i-1))){
                         br.append('*');
                     }
-
+                    if (currentChar == 'π') {
+                        br.append("("+Math.PI+")");
+                        if (i+1 <infixExpression.length() && isDigit(infixExpression.charAt(i+1))){
+                            br.append("*");
+                        }
+                        continue;
+                    }
                     // read the 3 char then switch to find out the operation
                     switch (String.valueOf(infixExpression.charAt(i++)) + infixExpression.charAt(i++) + infixExpression.charAt(i++)) {
                         case "sin":
@@ -59,8 +65,7 @@ public class Parser {
                             br.append('q');
                             break;
                     }
-                }
-                else if(i-1 >= 0 && (currentChar == '(') && isDigit(infixExpression.charAt(i - 1))){
+                } else if(i-1 >= 0 && (currentChar == '(') && isDigit(infixExpression.charAt(i - 1))){
                     br.append('*');
                 }
                 else if ((currentChar == '.')) {
@@ -159,7 +164,7 @@ public class Parser {
     }
      protected static boolean isSpecial(char ch) {
         return switch (ch){
-            case 's', 'e', 'c', 'l', 'q', 't' -> true;
+            case 's', 'e', 'c', 'l', 'q', 't','π' -> true;
             default -> false;
         };
     }
