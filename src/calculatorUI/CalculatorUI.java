@@ -83,7 +83,8 @@ public class CalculatorUI extends JFrame {
                     inputField.setText("");
                 }else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     calculate();
-                } else {
+                }else{
+                    isError.set(false);
                     isResult.set(false);
                 }
             }
@@ -170,10 +171,6 @@ public class CalculatorUI extends JFrame {
                 inputField.setText(text.substring(0, text.length() - 1));
             }
         } else {
-            if (isResult.get()) {
-                inputField.setText("");
-                isResult.set(false);
-            }
             // Handle scientific mode special characters
             switch (buttonText) {
                 case "sin":

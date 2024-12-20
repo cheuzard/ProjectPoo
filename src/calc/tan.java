@@ -7,7 +7,6 @@ class tan extends OperationUnaire {
 
     @Override
     public double Calculer() {
-        System.out.println(valeur);
         return Math.tan(Math.toRadians(valeur));
     }
 }
