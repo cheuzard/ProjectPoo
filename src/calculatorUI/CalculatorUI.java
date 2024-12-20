@@ -122,7 +122,7 @@ public class CalculatorUI extends JFrame {
                 // Style equals button
                 if (i == 3 && j == 2) {
                     styleOperatorButton(buttons[i][j]);
-                    buttons[i][j].addActionListener(e -> calculate());
+                    buttons[i][j].addActionListener(_ -> calculate());
                 }
                 // Style utility buttons (last row)
                 if (i == 4) {
@@ -132,7 +132,7 @@ public class CalculatorUI extends JFrame {
                 final int row = i;
                 final int col = j;
                 if (!(i == 3 && j == 2)) { // Skip equals button
-                    buttons[i][j].addActionListener(e -> handleButtonClick(row, col));
+                    buttons[i][j].addActionListener(_ -> handleButtonClick(row, col));
                 }
 
                 buttonPanel.add(buttons[i][j]);
@@ -154,7 +154,7 @@ public class CalculatorUI extends JFrame {
         modeButton.setFocusPainted(false);
         modeButton.setContentAreaFilled(false); // Removes hover effect background
         modeButton.setPreferredSize(new Dimension(130, 30));
-        modeButton.addActionListener(e -> toggleMode(modeButton));
+        modeButton.addActionListener(_ -> toggleMode(modeButton));
 
         resultPanel.add(resultField);
         resultPanel.add(modeButton);
@@ -263,8 +263,6 @@ public class CalculatorUI extends JFrame {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new CalculatorUI().setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new CalculatorUI().setVisible(true));
     }
 }

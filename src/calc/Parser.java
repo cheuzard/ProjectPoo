@@ -6,7 +6,7 @@ public class Parser {
 
     String infixExpression;
     String postFixExpression;
-    Parser(String infixExpression) throws Exception {
+    Parser(String infixExpression) {
         infixExpression = infixExpression.toLowerCase().replaceAll(" ", "");
 
         //the formated expression goes through validation to root out obviously wrong expressions
@@ -18,7 +18,7 @@ public class Parser {
 
 
     // method to convert infix to postfix
-    private String prepFormat(String infixExpression) throws Exception {
+    private String prepFormat(String infixExpression) {
         //standardize the mathematical expressions,
         //no space and all lowercase
             StringBuilder br = new StringBuilder();
