@@ -46,14 +46,21 @@ public class ValidityChecks {
             } else {
                 switch (pre.charAt(i)){
                     case 's','e', 'c', 'l','t':
-                        if (i+3 > pre.length()) throw new IllegalArgumentException("invalid mathematical expression");
+                        if (i+2 >= pre.length()) throw new IllegalArgumentException("invalid mathematical expression");
 
                         StringBuilder br =  new StringBuilder();
 
+                        br.append(pre.charAt(i++)).append(pre.charAt(i));
+                        if(br.toString().equals("ln")){
+                            checkSpecialValidity(pre, i);
+                            break;
+                        }
                         //for later checks we need to keep track of the location of the first character
                         //add the first three characters to a string
                         //three because sin, cos… share the same length 3
-                        br.append(pre.charAt(i++)).append(pre.charAt(i++)).append(pre.charAt(i));
+                        if (i+2 >= pre.length()) throw new IllegalArgumentException("invalid mathematical expression");
+                        i++;
+                        br.append(pre.charAt(i));
                         switch (br.toString()){
                             case "log":
                             case "sin":
@@ -72,9 +79,7 @@ public class ValidityChecks {
                         //if the next char is out of bounds throw an exception
                         //because these operations have their operand right after them
                         //check that the next char is either a digit or an opening parentheses
-                        if (i + 1 >= pre.length() || !isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(' && pre.charAt(i + 1) != '-'){
-                            throw new IllegalArgumentException("invalid mathematical expression");
-                        }
+                        checkSpecialValidity(pre, i);
                         break;
                     case '-':
                         if (i+1 >= pre.length()) throw new IllegalArgumentException("invalid '" + pre.charAt(i)+"' operation");
@@ -110,6 +115,12 @@ public class ValidityChecks {
                         throw new IllegalArgumentException("invalid mathematical expression");
                 }
             }
+        }
+    }
+
+    private static void checkSpecialValidity(String pre, int i) {
+        if (i + 1 >= pre.length() || !isDigit(pre.charAt(i + 1)) && pre.charAt(i + 1) != '(' && pre.charAt(i + 1) != '-'){
+            throw new IllegalArgumentException("invalid mathematical expression");
         }
     }
 }

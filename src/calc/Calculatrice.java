@@ -29,6 +29,7 @@ public class Calculatrice {
             case 'e' -> new Exp(a);
             case 'q' -> new Sqrt(a);
             case 't' -> new tan(a);
+            case 'n' -> new Ln(a);
             default -> null;
         };
         assert operation != null;

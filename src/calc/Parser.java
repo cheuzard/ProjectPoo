@@ -32,30 +32,34 @@ public class Parser {
                         br.append('*');
                     }
 
+                    StringBuilder tmp = new StringBuilder();
+                    tmp.append(infixExpression.charAt(i++)).append(infixExpression.charAt(i));
+                    if(tmp.toString().equals("ln")){
+                        br.append('n');
+                        continue;
+                    }
+
                     // read the 3 char then switch to find out the operation
-                    switch (String.valueOf(infixExpression.charAt(i++)) + infixExpression.charAt(i++) + infixExpression.charAt(i++)) {
+                    i++;
+                    switch (tmp.append(infixExpression.charAt(i)).toString()) {
                         case "sin":
                             br.append('s');
-                            i--;
                             break;
                         case "exp":
                             br.append('e');
-                            i--;
                             break;
                         case "cos":
                             br.append('c');
-                            i--;
                             break;
                         case "log":
                             br.append('l');
-                            i--;
                             break;
                         case "tan":
                             br.append('t');
-                            i--;
                             break;
                         default:
                             //if none of the 4 character operations it's sqrt
+                            i++;
                             br.append('q');
                             break;
                     }
@@ -159,7 +163,7 @@ public class Parser {
     }
      protected static boolean isSpecial(char ch) {
         return switch (ch){
-            case 's', 'e', 'c', 'l', 'q', 't' -> true;
+            case 's', 'e', 'c', 'l', 'q', 't','n' -> true;
             default -> false;
         };
     }
@@ -173,7 +177,7 @@ public class Parser {
     // Method to get operator precedence
     private static int getPrecedence(char operator) {
         return switch (operator) {
-            case 's', 'e', 'c', 'l', 'q' -> 4;
+            case 's', 'e', 'c', 'l', 'q','n' -> 4;
             case '^' -> 3;
             case '*', '/' -> 2;
             case '+', '-' -> 1;
