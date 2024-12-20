@@ -1,5 +1,3 @@
-package calculatorUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -8,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class CalculatorUI extends JFrame {
+public class CalculatorGUI extends JFrame {
     private final JTextField inputField;
     private JTextField resultField;
     private final AtomicBoolean isResult;
@@ -45,7 +43,7 @@ public class CalculatorUI extends JFrame {
         }
     };
 
-    public CalculatorUI() {
+    public CalculatorGUI() {
         isResult = new AtomicBoolean(false);
         isError = new AtomicBoolean(false);
 
@@ -260,6 +258,6 @@ public class CalculatorUI extends JFrame {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new CalculatorUI().setVisible(true));
+        SwingUtilities.invokeLater(() -> new CalculatorGUI().setVisible(true));
     }
 }

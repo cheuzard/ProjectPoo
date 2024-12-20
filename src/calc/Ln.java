@@ -7,7 +7,7 @@ class Ln extends OperationUnaire {
 
     @Override
     public double Calculer() {
-        if (valeur <= 0) throw new ArithmeticException("no 0 or negative number in log ");
+        if (valeur <= 0) throw new ArithmeticException("no 0 or negative number in ln ");
         //to get log base 10
         return Math.log(valeur);
     }
